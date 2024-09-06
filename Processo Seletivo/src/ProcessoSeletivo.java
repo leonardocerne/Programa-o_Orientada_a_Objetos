@@ -2,28 +2,30 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class App {
+public class ProcessoSeletivo {
     public static void main(String[] args) throws Exception {
         System.out.println("Processo Seletivo");
         Scanner entrada = new Scanner(System.in);
-        selecaoCandidatos(entrada);
-        imprimirSelecionados(entrada);
-        String[] candidatos = {"Leo", "Armando", "Carlos"};
-        for(String candidato: candidatos){
+        String[] lista = selecaoCandidatos(entrada);
+        imprimirSelecionados(entrada, lista);
+        for(String candidato: lista){
             entrandoEmContato(candidato);
         }
         entrada.close();
     }
 
-    static void imprimirSelecionados(Scanner entrada){
-        String [] lista = new String[5];
-        for(int i = 0; i < 5; i++){
-            System.out.println("Insira o nome do candidato Selecionado: ");
-            String candidato = entrada.nextLine();
-            lista[i] = candidato;
-        }
+    static void imprimirSelecionados(Scanner entrada, String[] lista){
+        //String [] lista = new String[5];
+        //for(int i = 0; i < 5; i++){
+        //    System.out.println("Insira o nome do candidato Selecionado: ");
+        //    String candidato = entrada.nextLine();
+        //    lista[i] = candidato;
+        //}
+        int i = 1;
+        System.out.println("Lista de candidatos selecionados: ");
         for(String candidato: lista){
-            System.out.println("O candidato selecionado foi o(a) " + candidato);
+            System.out.println(i + "- "+ candidato);
+            i++;
         }
     }
 
@@ -32,9 +34,10 @@ public class App {
     }
 
 
-    static void selecaoCandidatos(Scanner entrada){
+    static String[] selecaoCandidatos(Scanner entrada){
         int candidatosselecionados = 0;
         double salariobase = 2000.0;
+        String[] listadecandidatos = new String[5];
         while(candidatosselecionados < 5){
             System.out.println("Insira o nome do candidato: ");
             String candidato = entrada.nextLine();
@@ -42,9 +45,11 @@ public class App {
             System.out.println("O candidato " + candidato + " solicitou este valor de salário: " + salariopretendido);
             if(salariobase >= salariopretendido){
                 System.out.println("O candidato " + candidato + " foi selecionado para a vaga");
+                listadecandidatos[candidatosselecionados] = candidato;
                 candidatosselecionados++;
             }
         }
+        return listadecandidatos;
     }
 
     static void entrandoEmContato(String candidato){
