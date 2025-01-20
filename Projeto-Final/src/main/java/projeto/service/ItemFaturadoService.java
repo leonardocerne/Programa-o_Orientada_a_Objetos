@@ -28,6 +28,7 @@ public class ItemFaturadoService {
             return itemFaturado;
         }
         if(qtdEst <= itemFaturado.getQtdFaturada()){
+            itemFaturado.setQtdFaturada(qtdEst);
             itemFaturado.getItemPedido().getLivro().setQtdEstoque(0);
         }
         else{

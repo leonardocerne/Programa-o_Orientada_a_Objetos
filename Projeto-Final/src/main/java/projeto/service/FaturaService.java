@@ -104,8 +104,12 @@ public class FaturaService {
             System.out.println('\n' + "Fatura cancelada com sucesso!" );
             return;
         }
+        List<Integer> listaDeIDS = new ArrayList<>();
         for(ItemFaturado itemFaturado : itensFaturados)
-            itemFaturadoService.remover(itemFaturado.getId());
+            listaDeIDS.add(itemFaturado.getId());
+        for(Integer id : listaDeIDS){
+            itemFaturadoService.remover(id);
+        }
         umaFatura.setCancelada(1);
         System.out.println('\n' + "Fatura cancelada com sucesso!");
     }

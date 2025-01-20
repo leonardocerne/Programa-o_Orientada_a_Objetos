@@ -342,6 +342,7 @@ public class Principal {
             livro_4.setQtdEstoque(livro_4.getQtdEstoque() + 400);
             livro_5.setQtdEstoque(livro_5.getQtdEstoque() + 500);
 
+            System.out.println('\n' + "DEPOIS DO ABASTECIMENTO DE ESTOQUES: ");
             //Listando livros
             for(Livro livro: livros){
                 System.out.println('\n' + livro.toString());
@@ -400,8 +401,9 @@ public class Principal {
             if(!fatura_5_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_5_2);
 
             //Relatorio 1
-
-            System.out.println('\n' + '\n' + "RELATORIO 1:");
+            System.out.println();
+            System.out.println();
+            System.out.println('\n' + "RELATORIO 1:");
             List<ItemFaturado> itensLivro1 = livroService.recuperarItensFaturadosMesAno(livro_1.getId(), 01, 2025);
             System.out.println('\n' + "Lista de itens faturados do livro " + livro_1.getId() + " no mes " + 1 + " e ano " + 2025);
             for(ItemFaturado item : itensLivro1){
@@ -409,8 +411,9 @@ public class Principal {
             }
 
             //Relatorio 2
-
-            System.out.println('\n' + '\n' + "RELATORIO 2:");
+            System.out.println();
+            System.out.println();
+            System.out.println('\n' + "RELATORIO 2:");
             List<Livro> livrosNunca = livroService.recuperarTodosLivrosNuncaFaturados();
             List<Livro> livrosaux = livroService.recuperarLivros();
             if(livros.isEmpty()){
@@ -427,8 +430,9 @@ public class Principal {
             }
 
             //Relatorio 3
-
-            System.out.println('\n' + '\n' + "RELATORIO 3:");
+            System.out.println();
+            System.out.println();
+            System.out.println('\n' + "RELATORIO 3:");
             List<Livro> lista = livroService.recuperarLivrosFaturadosMesAno(02, 2025);
             if(lista.isEmpty()){
                 System.out.println('\n' + "Sem livros faturados nesse mes e ano");
