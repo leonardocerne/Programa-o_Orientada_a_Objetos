@@ -11,6 +11,7 @@ import projeto.exceptions.EntidadeNaoEncontradaException;
 import projeto.model.*;
 import projeto.service.*;
 import projeto.util.FabricaDeDaos;
+import projeto.util.Tarefa;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -194,6 +195,10 @@ public class Principal {
             itemPedidoService.incluir(itemPedido_1);
             itemPedidoService.incluir(itemPedido_2);
             pedidoService.incluir(pedido_1);
+            Tarefa umaTarefa = new Tarefa();
+            umaTarefa.setCliente(cliente_1);
+            umaTarefa.start();
+            umaTarefa.join();
 
             Pedido pedido_2 = new Pedido("02/01/2025", cliente_1, "");
             ItemPedido itemPedido_3 = new ItemPedido(10,livro_1, pedido_2);
@@ -201,6 +206,10 @@ public class Principal {
             itemPedidoService.incluir(itemPedido_3);
             itemPedidoService.incluir(itemPedido_4);
             pedidoService.incluir(pedido_2);
+            Tarefa umaTarefa2 = new Tarefa();
+            umaTarefa2.setCliente(cliente_1);
+            umaTarefa2.start();
+            umaTarefa2.join();
 
             Pedido pedido_3 = new Pedido("03/01/2025", cliente_1, "");
             ItemPedido itemPedido_5 = new ItemPedido(5,livro_1, pedido_3);
@@ -208,6 +217,10 @@ public class Principal {
             itemPedidoService.incluir(itemPedido_5);
             itemPedidoService.incluir(itemPedido_6);
             pedidoService.incluir(pedido_3);
+            Tarefa umaTarefa3 = new Tarefa();
+            umaTarefa3.setCliente(cliente_1);
+            umaTarefa3.start();
+            umaTarefa3.join();
 
             Pedido pedido_4 = new Pedido("04/01/2025", cliente_1, "");
             ItemPedido itemPedido_7 = new ItemPedido(10,livro_2, pedido_4);
@@ -217,6 +230,10 @@ public class Principal {
             itemPedidoService.incluir(itemPedido_8);
             itemPedidoService.incluir(itemPedido_9);
             pedidoService.incluir(pedido_4);
+            Tarefa umaTarefa4 = new Tarefa();
+            umaTarefa4.setCliente(cliente_1);
+            umaTarefa4.start();
+            umaTarefa4.join();
 
             Pedido pedido_5 = new Pedido("05/01/2025", cliente_1, "");
             ItemPedido itemPedido_10 = new ItemPedido(5,livro_2, pedido_5);
@@ -226,6 +243,10 @@ public class Principal {
             itemPedidoService.incluir(itemPedido_11);
             itemPedidoService.incluir(itemPedido_12);
             pedidoService.incluir(pedido_5);
+            Tarefa umaTarefa5 = new Tarefa();
+            umaTarefa5.setCliente(cliente_1);
+            umaTarefa5.start();
+            umaTarefa5.join();
 
             List<Pedido> pedidos = pedidoService.recuperarPedidos();
             System.out.println('\n' + "Lista de pedidos:");
@@ -243,18 +264,18 @@ public class Principal {
             ItemFaturado itemFaturado_2 = new ItemFaturado(15, itemPedido_2, fatura_1);
             itemFaturadoService.incluir(itemFaturado_1);
             itemFaturadoService.incluir(itemFaturado_2);
+            faturaService.incluir(fatura_1);
             fatura_1.setValorTotal();
             fatura_1.setValorTotalDesconto();
-            faturaService.incluir(fatura_1);
 
             Fatura fatura_2 = new Fatura("02/01/2025", cliente_1);
             ItemFaturado itemFaturado_3 = new ItemFaturado(10, itemPedido_3, fatura_2);
             ItemFaturado itemFaturado_4 = new ItemFaturado(40, itemPedido_4, fatura_2);
             itemFaturadoService.incluir(itemFaturado_3);
             itemFaturadoService.incluir(itemFaturado_4);
+            faturaService.incluir(fatura_2);
             fatura_2.setValorTotal();
             fatura_2.setValorTotalDesconto();
-            faturaService.incluir(fatura_2);
 
             //Tentando cancelar fatura_2
             faturaService.cancelar(2);
@@ -265,9 +286,9 @@ public class Principal {
             ItemFaturado itemFaturado_6 = new ItemFaturado(10, itemPedido_6, fatura_3);
             itemFaturadoService.incluir(itemFaturado_5);
             itemFaturadoService.incluir(itemFaturado_6);
+            if(!fatura_3.getItensFaturados().isEmpty()) faturaService.incluir(fatura_3);
             fatura_3.setValorTotal();
             fatura_3.setValorTotalDesconto();
-            if(!fatura_3.getItensFaturados().isEmpty()) faturaService.incluir(fatura_3);
 
             Fatura fatura_4 = new Fatura("04/01/2025", cliente_1);
             ItemFaturado itemFaturado_7 = new ItemFaturado(10, itemPedido_7, fatura_4);
@@ -276,9 +297,9 @@ public class Principal {
             itemFaturadoService.incluir(itemFaturado_7);
             itemFaturadoService.incluir(itemFaturado_8);
             itemFaturadoService.incluir(itemFaturado_9);
+            if(!fatura_4.getItensFaturados().isEmpty()) faturaService.incluir(fatura_4);
             fatura_4.setValorTotal();
             fatura_4.setValorTotalDesconto();
-            if(!fatura_4.getItensFaturados().isEmpty()) faturaService.incluir(fatura_4);
 
             //Faturando fatura 5
             Fatura fatura_5 = new Fatura("01/02/2025", cliente_1);
@@ -288,10 +309,11 @@ public class Principal {
             itemFaturadoService.incluir(itemFaturado_10);
             itemFaturadoService.incluir(itemFaturado_11);
             itemFaturadoService.incluir(itemFaturado_12);
+            if(!fatura_5.getItensFaturados().isEmpty()) faturaService.incluir(fatura_5);
             fatura_5.setValorTotal();
             fatura_5.setValorTotalDesconto();
-            if(!fatura_5.getItensFaturados().isEmpty()) faturaService.incluir(fatura_5);
 
+            System.out.println('\n' + "TESTE:" + cliente_1.getFaturas().size());
             //Lista de livros
             System.out.println('\n' + "Lista de livros:");
             for(Livro livro: livros){
@@ -354,18 +376,18 @@ public class Principal {
             ItemFaturado itemFaturado_2_2 = new ItemFaturado(15, itemPedido_2, fatura_1_2);
             itemFaturadoService.incluir(itemFaturado_1_2);
             itemFaturadoService.incluir(itemFaturado_2_2);
+            if(!fatura_1_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_1_2);
             fatura_1_2.setValorTotal();
             fatura_1_2.setValorTotalDesconto();
-            if(!fatura_1_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_1_2);
 
             Fatura fatura_2_2 = new Fatura("02/02/2025", cliente_1);
             ItemFaturado itemFaturado_3_2 = new ItemFaturado(10, itemPedido_3, fatura_2_2);
             ItemFaturado itemFaturado_4_2 = new ItemFaturado(40, itemPedido_4, fatura_2_2);
             itemFaturadoService.incluir(itemFaturado_3_2);
             itemFaturadoService.incluir(itemFaturado_4_2);
+            if(!fatura_2_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_2_2);
             fatura_2_2.setValorTotal();
             fatura_2_2.setValorTotalDesconto();
-            if(!fatura_2_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_2_2);
 
             //Faturando faturas 3 e 4
             Fatura fatura_3_2 = new Fatura("03/02/2025", cliente_1);
@@ -373,9 +395,9 @@ public class Principal {
             ItemFaturado itemFaturado_6_2 = new ItemFaturado(10, itemPedido_6, fatura_3_2);
             itemFaturadoService.incluir(itemFaturado_5_2);
             itemFaturadoService.incluir(itemFaturado_6_2);
+            if(!fatura_3_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_3_2);
             fatura_3_2.setValorTotal();
             fatura_3_2.setValorTotalDesconto();
-            if(!fatura_3_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_3_2);
 
             Fatura fatura_4_2 = new Fatura("04/02/2025", cliente_1);
             ItemFaturado itemFaturado_7_2 = new ItemFaturado(10, itemPedido_7, fatura_4_2);
@@ -384,9 +406,9 @@ public class Principal {
             itemFaturadoService.incluir(itemFaturado_7_2);
             itemFaturadoService.incluir(itemFaturado_8_2);
             itemFaturadoService.incluir(itemFaturado_9_2);
+            if(!fatura_4_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_4_2);
             fatura_4_2.setValorTotal();
             fatura_4_2.setValorTotalDesconto();
-            if(!fatura_4_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_4_2);
 
             //Faturando fatura 5
             Fatura fatura_5_2 = new Fatura("05/02/2025", cliente_1);
@@ -396,9 +418,9 @@ public class Principal {
             itemFaturadoService.incluir(itemFaturado_10_2);
             itemFaturadoService.incluir(itemFaturado_11_2);
             itemFaturadoService.incluir(itemFaturado_12_2);
+            if(!fatura_5_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_5_2);
             fatura_5_2.setValorTotal();
             fatura_5_2.setValorTotalDesconto();
-            if(!fatura_5_2.getItensFaturados().isEmpty()) faturaService.incluir(fatura_5_2);
 
             //Relatorio 1
             System.out.println();
@@ -447,7 +469,7 @@ public class Principal {
             }
 
             System.out.println("\n\n\nFIM DA EXECUCAO.");
-        }catch (DataInvalidaException | EntidadeNaoEncontradaException | ClasseComItensAssociadosException e){
+        }catch (DataInvalidaException | EntidadeNaoEncontradaException | ClasseComItensAssociadosException | InterruptedException e){
             System.out.println('\n' + e.getMessage());
         }
     }

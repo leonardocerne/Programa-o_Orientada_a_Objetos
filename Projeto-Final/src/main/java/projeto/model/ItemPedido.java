@@ -18,6 +18,7 @@ public class ItemPedido implements Serializable {
 
     public ItemPedido(int qtdPedida, Livro livro, Pedido pedido) {
         this.qtdPedida = qtdPedida;
+        this.qtdQueFalta = qtdPedida;
         this.livro = livro;
         this.pedido = pedido;
         setPrecoCobrado(livro, qtdPedida);

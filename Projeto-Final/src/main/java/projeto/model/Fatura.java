@@ -19,7 +19,7 @@ public class Fatura implements Serializable {
     private LocalDate dataCancelamento;
     private List<ItemFaturado> itensFaturados;
     private double valorTotal;
-    private double valorTotalDesconto = 0;
+    private double valorTotalDesconto;
     private Cliente cliente;
     private int Cancelada = 0;
 
@@ -69,9 +69,6 @@ public class Fatura implements Serializable {
         for (ItemFaturado itemFaturado : itensFaturados) {
             soma += itemFaturado.getQtdFaturada() * itemFaturado.getItemPedido().getLivro().getPreco();
         }
-        if(getCliente().getFaturas().size() > 4){
-            this.valorTotal = soma * 0.95;
-        }
         this.valorTotal = soma;
     }
 
@@ -80,12 +77,13 @@ public class Fatura implements Serializable {
     }
 
     public void setValorTotalDesconto() {
-        if(getCliente().getFaturas().size() > 4){
+        if(getCliente().getFaturas().size() > 3){
             double soma = 0.0;
             for (ItemFaturado itemFaturado : itensFaturados) {
                 soma += itemFaturado.getQtdFaturada() * itemFaturado.getItemPedido().getLivro().getPreco();
             }
             this.valorTotalDesconto = soma * 0.05;
+            System.out.println('\n' + valorTotalDesconto);
         }
         else this.valorTotalDesconto = 0;
     }

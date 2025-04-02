@@ -15,21 +15,24 @@ public class FaturaService {
     private final FaturaDao faturaDao = FabricaDeDaos.getDAO(FaturaDao.class);
     private final ItemFaturadoService itemFaturadoService = new ItemFaturadoService();
     public Fatura incluir(Fatura fatura) {
-        fatura.getCliente().getFaturas().add(fatura);
-        ItemFaturado itemFaturado = fatura.getItensFaturados().get(0);
-        List<ItemPedido> itensPedidos = itemFaturado.getItemPedido().getPedido().getItens();
-        int conts = 0, contn = 0;//, cont0 = 0;
-        for(ItemPedido itemPedido : itensPedidos) {
-            //if(itemPedido.getLivro().getQtdEstoque() == 0) cont0++;
-            if(itemPedido.getQtdQueFalta() == 0) conts++;
-            if(itemPedido.getQtdQueFalta() == itemPedido.getQtdPedida()) contn++;
+        if(fatura.getItensFaturados().get(0).getItemPedido().getPedido().getFaturado() == 0){
+            fatura.getCliente().getFaturas().add(fatura);
+            ItemFaturado itemFaturado = fatura.getItensFaturados().get(0);
+            List<ItemPedido> itensPedidos = itemFaturado.getItemPedido().getPedido().getItens();
+            int conts = 0, contn = 0;//, cont0 = 0;
+            for(ItemPedido itemPedido : itensPedidos) {
+                //if(itemPedido.getLivro().getQtdEstoque() == 0) cont0++;
+                if(itemPedido.getQtdQueFalta() == 0) conts++;
+                if(itemPedido.getQtdQueFalta() == itemPedido.getQtdPedida()) contn++;
+            }
+            //if(cont0 == itensPedidos.size()) System.out.println('\n' + "Nao foi possivel faturar nenhum item");;
+            if(conts == itensPedidos.size()) itemFaturado.getItemPedido().getPedido().setStatus("Pago");
+            if((contn < itensPedidos.size()) && contn > 0) itemFaturado.getItemPedido().getPedido().setStatus("Pagando");
+            if(contn == itensPedidos.size()) itemFaturado.getItemPedido().getPedido().setStatus("Em Aberto");
+            itemFaturado.getItemPedido().getPedido().setFaturado(1);
+            return faturaDao.incluir(fatura);
         }
-        //if(cont0 == itensPedidos.size()) System.out.println('\n' + "Nao foi possivel faturar nenhum item");;
-        if(conts == itensPedidos.size()) itemFaturado.getItemPedido().getPedido().setStatus("Pago");
-        if((contn < itensPedidos.size()) && contn > 0) itemFaturado.getItemPedido().getPedido().setStatus("Pagando");
-        if(contn == itensPedidos.size()) itemFaturado.getItemPedido().getPedido().setStatus("Em Aberto");
-        itemFaturado.getItemPedido().getPedido().setFaturado(1);
-        return faturaDao.incluir(fatura);
+        return null;
     }
 
     public Fatura remover(int numFatura) throws EntidadeNaoEncontradaException, ClasseComItensAssociadosException {

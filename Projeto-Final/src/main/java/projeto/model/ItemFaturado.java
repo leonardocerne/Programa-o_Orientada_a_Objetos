@@ -49,8 +49,7 @@ public class ItemFaturado implements Serializable {
     }
 
     public void setQtdFaturada(int qtdFaturada) {
-        if(qtdFaturada >= itemPedido.getLivro().getQtdEstoque()) this.qtdFaturada = itemPedido.getLivro().getQtdEstoque();
-        else this.qtdFaturada = qtdFaturada;
+        this.qtdFaturada = qtdFaturada;
     }
 
     public ItemPedido getItemPedido() {
